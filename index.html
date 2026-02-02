@@ -1,112 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sethu 💖 Valentine</title>
 
+<!-- Instagram-style font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #ff758f, #ff4d6d);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-}
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ffdde1, #ee9ca7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+  }
 
-.card {
-  background: white;
-  padding: 32px 26px 36px;
-  border-radius: 28px;
-  width: 90%;
-  max-width: 340px;
-  text-align: center;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
-}
+  .card {
+    background: white;
+    padding: 30px 24px 34px;
+    border-radius: 26px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+    animation: popIn 0.6s cubic-bezier(.2,1.4,.4,1);
+  }
 
-h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
 
-h2 {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 28px;
-  color: #666;
-}
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
 
-/* BUTTON AREA */
-.buttons {
-  position: relative;
-  width: 100%;
-  height: 100px;
-}
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 22px;
+    color: #555;
+  }
 
-/* BUTTONS */
-button {
-  padding: 14px 30px;
-  font-size: 18px;
-  font-weight: 600;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  position: absolute;
-  top: 25px;
-  transition: transform 0.15s ease;
-}
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+  }
 
-button:active {
-  transform: scale(0.92);
-}
+  button {
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
 
-#yes {
-  left: 20px;
-  background: linear-gradient(135deg, #ff4d6d, #ff7aa2);
-  color: white;
-  box-shadow: 0 14px 28px rgba(255,77,109,0.5);
-}
+  button:active {
+    transform: scale(0.9);
+  }
 
-#no {
-  right: 20px;
-  background: #eee;
-  color: #777;
-  z-index: 10;
-}
+  #yes {
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: white;
+    box-shadow: 0 12px 24px rgba(255,77,109,0.45);
+  }
 
-/* HEARTS */
-.heart {
-  position: fixed;
-  font-size: 26px;
-  pointer-events: none;
-  animation: fly 1.6s ease forwards;
-}
+  #no {
+    background: #eee;
+    color: #666;
+    position: absolute;
+  }
 
-@keyframes fly {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(-160px) scale(1.7); opacity: 0; }
-}
+  /* Emoji + Confetti */
+  .emoji, .confetti {
+    position: fixed;
+    pointer-events: none;
+  }
 
-/* CONFETTI */
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 14px;
-  animation: fall 2s ease forwards;
-}
+  .emoji {
+    font-size: 30px;
+    animation: floatUp 1.6s ease forwards;
+  }
 
-@keyframes fall {
-  from { transform: translateY(0) rotate(0deg); }
-  to { transform: translateY(220px) rotate(720deg); opacity: 0; }
-}
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-140px) scale(1.6); opacity: 0; }
+  }
+
+  .confetti {
+    width: 10px;
+    height: 14px;
+    opacity: 0.9;
+    animation: confettiFall 1.8s ease-out forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(200px) rotate(720deg); opacity: 0; }
+  }
 </style>
 </head>
 
@@ -116,87 +119,69 @@ button:active {
   <h1>Will you be my Valentine? 💖</h1>
   <h2>Sethu 🫶</h2>
 
-  <div class="buttons" id="buttons">
+  <div class="buttons">
     <button id="yes">Yes</button>
     <button id="no">No</button>
   </div>
 </div>
 
-<audio id="hoverSound" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-soft-click-1129.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="yesSound" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3" type="audio/mpeg">
-</audio>
+<!-- Sounds -->
+<audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3"></audio>
+<audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
 <script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const area = document.getElementById("buttons");
-const hoverSound = document.getElementById("hoverSound");
-const yesSound = document.getElementById("yesSound");
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const card = document.getElementById("card");
+  const hoverSound = document.getElementById("hoverSound");
+  const yesSound = document.getElementById("yesSound");
 
-/* MOVE NO BUTTON (SAFE + MOBILE FIXED) */
-function moveNo(e) {
-  e.preventDefault();
-
-  hoverSound.currentTime = 0;
-  hoverSound.play().catch(() => {});
-
-  const areaRect = area.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
-
-  const maxX = areaRect.width - btnRect.width - 10;
-  const minX = 10;
-
-  const randomX = Math.random() * (maxX - minX) + minX;
-
-  noBtn.style.left = randomX + "px";
-  noBtn.style.right = "auto";
-}
-
-/* Desktop + Mobile */
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", moveNo, { passive: false });
-
-/* EFFECTS */
-function hearts(x, y) {
-  const emojis = ["❤️","💖","💕","💘","😍"];
-  for (let i = 0; i < 14; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    h.style.left = x + (Math.random()*60 - 30) + "px";
-    h.style.top = y + "px";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 1600);
+  function moveNo() {
+    hoverSound.currentTime = 0;
+    hoverSound.play();
+    noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
   }
-}
 
-function confetti() {
-  const colors = ["#ff4d6d", "#ff7aa2", "#ffd166"];
-  for (let i = 0; i < 24; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-    c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.top = window.innerHeight / 2 + "px";
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 2000);
+  noBtn.addEventListener("mouseover", moveNo);
+  noBtn.addEventListener("touchstart", moveNo);
+
+  function emojiBurst() {
+    const emojis = ["💖","💕","🥰","😍","❤️","💘"];
+    for (let i = 0; i < 16; i++) {
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      e.style.left = Math.random() * window.innerWidth + "px";
+      e.style.top = window.innerHeight - 60 + "px";
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 1600);
+    }
   }
-}
 
-yesBtn.addEventListener("click", (e) => {
-  yesSound.play().catch(() => {});
-  hearts(e.clientX || window.innerWidth/2, e.clientY || window.innerHeight/2);
-  confetti();
-  document.getElementById("card").innerHTML = `
-    <h1>Yayyy! 💞</h1>
-    <h2>Sethu said YES 🥰</h2>
-    <p>No escape now ❤️</p>
-  `;
-});
+  function confettiBlast() {
+    const colors = ["#ff4d6d", "#ff758f", "#ffd166", "#f72585"];
+    for (let i = 0; i < 28; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.left = Math.random() * window.innerWidth + "px";
+      c.style.top = window.innerHeight / 2 + "px";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 1800);
+    }
+  }
+
+  yesBtn.addEventListener("click", () => {
+    yesSound.play();
+    emojiBurst();
+    confettiBlast();
+    card.innerHTML = `
+      <h1>Yayyy! 💞</h1>
+      <h2>Sethu said YES 🥰</h2>
+      <p>Officially Valentine vibes ❤️</p>
+    `;
+  });
 </script>
 
 </body>
