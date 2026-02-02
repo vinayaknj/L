@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sethu 💖 Valentine</title>
 
-<!-- Instagram-style font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -65,6 +64,7 @@
     border-radius: 999px;
     cursor: pointer;
     transition: transform 0.15s ease;
+    touch-action: manipulation;
   }
 
   button:active {
@@ -77,13 +77,13 @@
     box-shadow: 0 12px 24px rgba(255,77,109,0.45);
   }
 
+  /* 🔑 ONLY FIX: relative initially */
   #no {
-  background: #eee;
-  color: #666;
-  position: absolute;
-}
+    background: #eee;
+    color: #666;
+    position: relative;
+  }
 
-  /* Emoji + Confetti */
   .emoji, .confetti {
     position: fixed;
     pointer-events: none;
@@ -125,7 +125,6 @@
   </div>
 </div>
 
-<!-- Sounds -->
 <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3"></audio>
 <audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
@@ -137,13 +136,13 @@
   const yesSound = document.getElementById("yesSound");
 
   function moveNo() {
-  hoverSound.currentTime = 0;
-  hoverSound.play();
+    hoverSound.currentTime = 0;
+    hoverSound.play();
 
-  noBtn.style.position = "fixed"; // switch only when moving
-  noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-  noBtn.style.top = Math.random() * (window.innerHeight - 80) + "px";
-}
+    noBtn.style.position = "fixed";
+    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 80) + "px";
+  }
 
   noBtn.addEventListener("mouseover", moveNo);
   noBtn.addEventListener("touchstart", moveNo);
