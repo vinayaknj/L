@@ -78,10 +78,10 @@
   }
 
   #no {
-    background: #eee;
-    color: #666;
-    position: absolute;
-  }
+  background: #eee;
+  color: #666;
+  position: absolute;
+}
 
   /* Emoji + Confetti */
   .emoji, .confetti {
@@ -137,11 +137,13 @@
   const yesSound = document.getElementById("yesSound");
 
   function moveNo() {
-    hoverSound.currentTime = 0;
-    hoverSound.play();
-    noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
-  }
+  hoverSound.currentTime = 0;
+  hoverSound.play();
+
+  noBtn.style.position = "fixed"; // switch only when moving
+  noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 80) + "px";
+}
 
   noBtn.addEventListener("mouseover", moveNo);
   noBtn.addEventListener("touchstart", moveNo);
