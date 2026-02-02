@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sethu 💖 Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff758f, #ff4d6d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  background: white;
+  padding: 32px 26px 36px;
+  border-radius: 28px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 28px;
+  color: #666;
+}
+
+/* BUTTON AREA */
+.buttons {
+  position: relative;
+  width: 100%;
+  height: 100px;
+}
+
+/* BUTTONS */
+button {
+  padding: 14px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  position: absolute;
+  top: 25px;
+  transition: transform 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.92);
+}
+
+#yes {
+  left: 20px;
+  background: linear-gradient(135deg, #ff4d6d, #ff7aa2);
+  color: white;
+  box-shadow: 0 14px 28px rgba(255,77,109,0.5);
+}
+
+#no {
+  right: 20px;
+  background: #eee;
+  color: #777;
+  z-index: 10;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  font-size: 26px;
+  pointer-events: none;
+  animation: fly 1.6s ease forwards;
+}
+
+@keyframes fly {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-160px) scale(1.7); opacity: 0; }
+}
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 14px;
+  animation: fall 2s ease forwards;
+}
+
+@keyframes fall {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(220px) rotate(720deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Will you be my Valentine? 💖</h1>
+  <h2>Sethu 🫶</h2>
+
+  <div class="buttons" id="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
+</div>
+
+<audio id="hoverSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-soft-click-1129.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="yesSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const area = document.getElementById("buttons");
+const hoverSound = document.getElementById("hoverSound");
+const yesSound = document.getElementById("yesSound");
+
+/* MOVE NO BUTTON (SAFE + MOBILE FIXED) */
+function moveNo(e) {
+  e.preventDefault();
+
+  hoverSound.currentTime = 0;
+  hoverSound.play().catch(() => {});
+
+  const areaRect = area.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
+
+  const maxX = areaRect.width - btnRect.width - 10;
+  const minX = 10;
+
+  const randomX = Math.random() * (maxX - minX) + minX;
+
+  noBtn.style.left = randomX + "px";
+  noBtn.style.right = "auto";
+}
+
+/* Desktop + Mobile */
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo, { passive: false });
+
+/* EFFECTS */
+function hearts(x, y) {
+  const emojis = ["❤️","💖","💕","💘","😍"];
+  for (let i = 0; i < 14; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    h.style.left = x + (Math.random()*60 - 30) + "px";
+    h.style.top = y + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1600);
+  }
+}
+
+function confetti() {
+  const colors = ["#ff4d6d", "#ff7aa2", "#ffd166"];
+  for (let i = 0; i < 24; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.left = Math.random() * window.innerWidth + "px";
+    c.style.top = window.innerHeight / 2 + "px";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2000);
+  }
+}
+
+yesBtn.addEventListener("click", (e) => {
+  yesSound.play().catch(() => {});
+  hearts(e.clientX || window.innerWidth/2, e.clientY || window.innerHeight/2);
+  confetti();
+  document.getElementById("card").innerHTML = `
+    <h1>Yayyy! 💞</h1>
+    <h2>Sethu said YES 🥰</h2>
+    <p>No escape now ❤️</p>
+  `;
+});
+</script>
+
+</body>
+</html>
