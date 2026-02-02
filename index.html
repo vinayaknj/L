@@ -1,33 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sethu 💖 Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ffdde1, #ee9ca7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    padding: 30px 24px 34px;
+    border-radius: 26px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+    animation: popIn 0.6s cubic-bezier(.2,1.4,.4,1);
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 22px;
+    color: #555;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  button {
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    touch-action: manipulation;
+  }
+
+  button:active {
+    transform: scale(0.9);
+  }
+
+  #yes {
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: white;
+    box-shadow: 0 12px 24px rgba(255,77,109,0.45);
+  }
+
+  /* 🔑 ONLY FIX: relative initially */
+  #no {
+    background: #eee;
+    color: #666;
+    position: relative;
+  }
+
+  .emoji, .confetti {
+    position: fixed;
+    pointer-events: none;
+  }
+
+  .emoji {
+    font-size: 30px;
+    animation: floatUp 1.6s ease forwards;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-140px) scale(1.6); opacity: 0; }
+  }
+
+  .confetti {
+    width: 10px;
+    height: 14px;
+    opacity: 0.9;
+    animation: confettiFall 1.8s ease-out forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(200px) rotate(720deg); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Will you be my Valentine? 💖</h1>
+  <h2>Sethu 🫶</h2>
+
+  <div class="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
+</div>
+
+<audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3"></audio>
+<audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+
 <script>
   const noBtn = document.getElementById("no");
   const card = document.getElementById("card");
   const hoverSound = document.getElementById("hoverSound");
 
-  function moveNo() {
+  function moveNo(e) {
+    e.preventDefault(); // 🔑 critical for mobile
+
     hoverSound.currentTime = 0;
     hoverSound.play();
 
     const cardRect = card.getBoundingClientRect();
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
+    const btnW = noBtn.offsetWidth;
+    const btnH = noBtn.offsetHeight;
+    const margin = 20;
 
-    let x, y;
+    // Safe zones: LEFT or RIGHT of card only
+    const zones = [
+      { // LEFT
+        xMin: margin,
+        xMax: cardRect.left - btnW - margin
+      },
+      { // RIGHT
+        xMin: cardRect.right + margin,
+        xMax: window.innerWidth - btnW - margin
+      }
+    ];
 
-    do {
-      x = Math.random() * (window.innerWidth - btnWidth);
-      y = Math.random() * (window.innerHeight - btnHeight);
-    } while (
-      x > cardRect.left - btnWidth &&
-      x < cardRect.right &&
-      y > cardRect.top - btnHeight &&
-      y < cardRect.bottom
-    );
+    // Pick a valid zone
+    const validZones = zones.filter(z => z.xMax > z.xMin);
+    const zone = validZones[Math.floor(Math.random() * validZones.length)];
+
+    const x = zone.xMin + Math.random() * (zone.xMax - zone.xMin);
+    const y = Math.random() * (window.innerHeight - btnH - margin * 2) + margin;
 
     noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
   }
 
   noBtn.addEventListener("mouseover", moveNo);
-  noBtn.addEventListener("touchstart", moveNo);
+  noBtn.addEventListener("touchstart", moveNo, { passive: false });
 </script>
+
+
+
+</body>
+</html>
