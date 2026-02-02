@@ -130,49 +130,60 @@
 
 <script>
   const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
   const card = document.getElementById("card");
   const hoverSound = document.getElementById("hoverSound");
+  const yesSound = document.getElementById("yesSound");
 
-  function moveNo(e) {
-    e.preventDefault(); // 🔑 critical for mobile
-
+  function moveNo() {
     hoverSound.currentTime = 0;
     hoverSound.play();
 
-    const cardRect = card.getBoundingClientRect();
-    const btnW = noBtn.offsetWidth;
-    const btnH = noBtn.offsetHeight;
-    const margin = 20;
-
-    // Safe zones: LEFT or RIGHT of card only
-    const zones = [
-      { // LEFT
-        xMin: margin,
-        xMax: cardRect.left - btnW - margin
-      },
-      { // RIGHT
-        xMin: cardRect.right + margin,
-        xMax: window.innerWidth - btnW - margin
-      }
-    ];
-
-    // Pick a valid zone
-    const validZones = zones.filter(z => z.xMax > z.xMin);
-    const zone = validZones[Math.floor(Math.random() * validZones.length)];
-
-    const x = zone.xMin + Math.random() * (zone.xMax - zone.xMin);
-    const y = Math.random() * (window.innerHeight - btnH - margin * 2) + margin;
-
     noBtn.style.position = "fixed";
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
+    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 80) + "px";
   }
 
   noBtn.addEventListener("mouseover", moveNo);
-  noBtn.addEventListener("touchstart", moveNo, { passive: false });
+  noBtn.addEventListener("touchstart", moveNo);
+
+  function emojiBurst() {
+    const emojis = ["💖","💕","🥰","😍","❤️","💘"];
+    for (let i = 0; i < 16; i++) {
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      e.style.left = Math.random() * window.innerWidth + "px";
+      e.style.top = window.innerHeight - 60 + "px";
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 1600);
+    }
+  }
+
+  function confettiBlast() {
+    const colors = ["#ff4d6d", "#ff758f", "#ffd166", "#f72585"];
+    for (let i = 0; i < 28; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.left = Math.random() * window.innerWidth + "px";
+      c.style.top = window.innerHeight / 2 + "px";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 1800);
+    }
+  }
+
+  yesBtn.addEventListener("click", () => {
+    yesSound.play();
+    emojiBurst();
+    confettiBlast();
+    card.innerHTML = `
+      <h1>Yayyy! 💞</h1>
+      <h2>Sethu said YES🥰🥰</h2>
+      <p>Sethu ❤️ Vinayak</p>
+    `;
+  });
 </script>
-
-
 
 </body>
 </html>
